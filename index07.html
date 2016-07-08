@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.2//EN" "http://www.openmobilealliance.org/tech/DTD/xhtml-mobile12.dtd">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+<html>
+  <head>
+    <style>
+		body {
+			margin:0;
+			padding:0;
+			background: #000 url(http://i.imgur.com/1YXY2YU.jpg) center center fixed no-repeat;
+			-moz-background-size: cover;
+			background-size: cover;
+		}		
+		</style>
+    <title>index</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script>
+     var socket = io();
+    
+    //  socket.on('GJ', function(msg){
+    //   $('#ms').val('冠霆' + msg);
+    // });
+    //  function e(x)
+    //  {
+    //    socket.emit('GJ', x);
+    //  }
+    function e()
+     {
+       // 發送訊息給 Server
+       socket.emit('Flag', '1');
+       socket.emit('GJ', $('#ms').val());
+       socket.emit('J', $('#ps').val());
+       $('#ms').val('');
+       $('#ps').val('');
+     }
+     function f()
+     {
+       // 發送訊息給 Server
+       socket.emit('Flag', '0');
+       socket.emit('GJ', $('#m').val());
+       socket.emit('J', $('#p').val());
+       $('#m').val('');
+       $('#p').val('');
+     }
+     var socket1 = io.connect();
+
+      socket1.on('date', function(data) {
+        $('#date').text(data.date);
+      });
+
+      $(document).ready(function(){
+        $('#text').keypress(function(e){
+          socket1.emit('client_data', {
+            'letter': String.fromCharCode(e.charCode)
+          });
+        });
+      });
+    </script>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-7" />
+    <title>parking system</title>
+  </head>
+  <body>
+    
+    <font color="yellow">
+    <H1 align="center"><div style="width:500px;background-color:black;opacity:0.82;margin:200px auto 175px;">Parking System  :)</div></H1>
+    </font>
+    
+      
+
+<p align="center">      
+<H3><font color="green"><div style="text-align:center;margin:30px auto 4px ;width:53px;height:28px;background-color:black;opacity:0.92">進入</div></font></H3>
+            <div style="text-align:center"><input id="ms" placeHolder="帳號" autocomplete="off"/></div>
+            <div style="text-align:center"><input id="ps" placeHolder="密碼" autocomplete="off"/></div>
+            <div style="text-align:center"><button onclick="e()" >Check In</button><br></div>
+</p> 
+      
+
+      <p align="center">
+      <H3><font color="red"><div style="text-align:center;margin:4px auto ;width:53px;height:28px;background-color:black;opacity:0.92">離開</div></font></H3>
+            <div style="text-align:center"><input id="m" placeHolder="帳號" autocomplete="off"/></div>
+            <div style="text-align:center"><input id="p" placeHolder="密碼" autocomplete="off"/></div>
+            <div style="text-align:center"><button onclick="f()" >Check Out</button><br></div>
+      </p>
+
+      <div style="text-align:center"><div id="date"></div></div>
+      <!--<textarea id="text"></textarea>-->
+      <!--<input id="ms" autocomplete="off" value="冠霆off"><br>-->
+      <!--<input onchange="e($('#range').val())" type="range" min="1" max="11" step="1" id="range" />-->
+  </body>
+</html>
